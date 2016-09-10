@@ -1,9 +1,13 @@
-#!/usr/bin/env php
 <?php
 
 /**
  * @author Rolf den Hartog <rolf@rolfdenhartog.nl>
  */
+
+/**
+ * Include the composer autoloader.
+ */
+require_once __DIR__ . '/../../autoload.php';
 
 /**
  * Defines the paths to this package and to the project.
