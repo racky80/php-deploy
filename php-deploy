@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * @author Rolf den Hartog <rolf@rolfdenhartog.nl>
+ */
+
+/**
+ * Defines the paths to this package and to the project.
+ */
+define('PHP_DEPLOY_DIR', __DIR__);
+define('PHP_DEPLOY_PROJECT_DIR', PHP_DEPLOY_DIR . '/../../..');
+
+/**
+ * Class uses.
+ */
+use PhpDeploy\Commands\InitCommand;
+use PhpDeploy\Commands\PullCommand;
+use Symfony\Component\Console\Application;
+
+/**
+ * - Create the Symfony console application.
+ * - Register the commands.
+ * - Run the application.
+ */
+$application = new Application();
+$application->add(new InitCommand());
+$application->add(new PullCommand());
+$application->run();
