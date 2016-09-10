@@ -1,5 +1,7 @@
 # PHP Deploy package
 
+## This package is still being developed!
+
 A set of commands to:
 
 * Pull the code from Bitbucket or Github.
