@@ -6,15 +6,9 @@
 
 return [
     /**
-     * The name of a website or application. My advice: use the domain name.
+     * The full name of a repository.
      */
-    'example.org' => [
-
-        /**
-         * The 'repository' key contains the full path to a remote git repository. Make sure ssh keys are set and
-         * tested. This configuration is used by the pull command.
-         */
-        'repository' => 'git@github.com:rolfdenhartog/symphony-theme.git',
+    'rolfdenhartog/symphony-theme' => [
 
         /**
          * 'branches' is an array with branch names and paths for the pull command. If you follow Git flow, you will

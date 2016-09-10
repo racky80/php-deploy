@@ -16,11 +16,11 @@ use Symfony\Component\Process\Process;
 class PullCommand extends AbstractCommand
 {
     /**
-     * The name of the application.
+     * The full name of the repository (user-or-team/repository).
      *
      * @var string
      */
-    private $application = null;
+    private $repository = null;
 
     /**
      * The name of the branch.
@@ -44,7 +44,7 @@ class PullCommand extends AbstractCommand
         $this
             ->setName('pull')
             ->setDescription('Resets the head of a Git repository and pulls the code')
-            ->addArgument('application', InputArgument::REQUIRED, 'The name of the application')
+            ->addArgument('repository', InputArgument::REQUIRED, 'The name of the repository')
             ->addArgument('branch', InputArgument::REQUIRED, 'The name of the branch to pull');
     }
 
@@ -56,10 +56,10 @@ class PullCommand extends AbstractCommand
      */
     protected function executeCommand()
     {
-        $this->application      = $this->input->getArgument('application');
-        $this->branch           = $this->input->getArgument('branch');
+        $this->repository = $this->input->getArgument('repository');
+        $this->branch     = $this->input->getArgument('branch');
 
-        $configuration = \PhpDeploy\config($this->application);
+        $configuration = \PhpDeploy\config($this->repository);
         $branches      = array_get($configuration, 'branches', []);
 
         if (empty($branches)) {
