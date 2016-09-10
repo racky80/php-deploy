@@ -17,6 +17,7 @@
   },
   "autoload": {
     "files": [
+      "bootstrap.php",
       "helpers.php"
     ],
     "psr-4": {
