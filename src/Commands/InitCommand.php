@@ -19,6 +19,7 @@ class InitCommand extends AbstractCommand
     private $files = [
         'php-deploy-config.php',
         'webhook-bitbucket.php',
+        'webhook-github.php',
     ];
 
     /**
