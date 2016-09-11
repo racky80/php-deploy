@@ -4,7 +4,7 @@
  * @author Rolf den Hartog <rolf@rolfdenhartog.nl>
  *
  * Rename this file with a hash! The 'hash' in the filename is for a very good reason. This makes it harder for hackers
- * to guess the filename and make request to it. Example: webhook-bitbucket-3kg40ks32d.php
+ * to guess the filename and make request to it. Example: webhook-github-3kg40ks32d.php
  *
  * You probably have to move this file to a public directory.
  */
@@ -36,7 +36,7 @@ if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') !== 'POST') {
 $json       = file_get_contents('php://input');
 $payload    = json_decode($json);
 $repository = $payload->repository->full_name;
-$branch     = $payload->push->changes[0]->new->name;
+$branch     = preg_replace('/refs\/heads\/(.*)/', '$1', $payload->ref);
 
 /**
  * Create command and run it.
