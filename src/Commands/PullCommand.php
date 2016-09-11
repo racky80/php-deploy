@@ -71,11 +71,11 @@ class PullCommand extends AbstractCommand
             $this->resetHead();
             $this->pullCode();
 
-            $this->writeln('Deployed!');
+            $this->writeln('Code pulled!');
 
             return 0;
         } catch (\Exception $e) {
-            Log::error('Deploying failed: ' . $e->getMessage() . '. Check the log file.');
+            Log::error('Pulling code failed: ' . $e->getMessage() . '. Check the log file.');
 
             throw $e;
         }
@@ -115,7 +115,7 @@ class PullCommand extends AbstractCommand
         if ($process->isSuccessful() === false) {
             Log::error($process->getOutput());
 
-            throw new \Exception('Pulling code failed');
+            throw new \Exception('Command \'git pull\' failed');
         }
     }
 }
