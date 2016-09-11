@@ -6,7 +6,7 @@
 
 return [
     /**
-     * The full name of a repository.
+     * The full name of a repository (username-or-team/repository).
      */
     'rolfdenhartog/symphony-theme' => [
 

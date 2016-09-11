@@ -26,7 +26,7 @@ This package was created to provide a set of simple but helpful commands to depl
 Before you can install this tool, you need to have the following ready:
 
 * Git repositories set up on the server.
-* Git repositories are able to download the code with a SSH/public key.
+* Git repositories are able to download the code with SSH/public key (the `git pull` command shouldn't need a password).
 * Webhooks configured on Bitbucket or Github.
 * A virtual host set up to receive a webhook.
 
@@ -34,7 +34,6 @@ It is a best practice to create a subdomain for the webhook. Something like depl
 a name like deploy-29c37h3a92.example.org. This makes it much harder for hackers to guess the domain name.
 
 ## Installation
-
 
 ```
 composer require rolfdenhartog/php-deploy

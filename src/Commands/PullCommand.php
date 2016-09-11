@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 class PullCommand extends AbstractCommand
 {
     /**
-     * The full name of the repository (user-or-team/repository).
+     * The full name of the repository (username-or-team/repository).
      *
      * @var string
      */
@@ -44,7 +44,7 @@ class PullCommand extends AbstractCommand
         $this
             ->setName('pull')
             ->setDescription('Resets the head of a Git repository and pulls the code')
-            ->addArgument('repository', InputArgument::REQUIRED, 'The name of the repository')
+            ->addArgument('repository', InputArgument::REQUIRED, 'The full name (username-or-team/repository) of the repository')
             ->addArgument('branch', InputArgument::REQUIRED, 'The name of the branch to pull');
     }
 
