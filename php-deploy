@@ -5,6 +5,11 @@
  */
 
 /**
+ * Include the composer autoloader.
+ */
+require_once __DIR__ . '/../../autoload.php';
+
+/**
  * Class uses.
  */
 use PhpDeploy\Commands\InitCommand;

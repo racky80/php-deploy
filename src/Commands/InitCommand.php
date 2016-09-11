@@ -55,8 +55,8 @@ class InitCommand extends AbstractCommand
      */
     private function copyFile(string $file)
     {
-        $from = PHP_DEPLOY_DIR . '/files/' . $file;
-        $to   = PHP_DEPLOY_PROJECT_DIR . '/' . $file;
+        $from = \PhpDeploy\path('/files/' . $file);
+        $to   = \PhpDeploy\path('/../../../' . $file);
 
         if (file_exists($to)) {
             $this->writeln('File already copied');
