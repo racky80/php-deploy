@@ -86,7 +86,7 @@ class Log
     private static function getInstance()
     {
         if (static::$instance === null) {
-            static::$logsDirectory = PHP_DEPLOY_DIR . '/logs';
+            static::$logsDirectory = path('/logs');
             static::$instance      = new Logger('php-deploy');
             static::$instance->pushHandler(new RotatingFileHandler(static::$logsDirectory . '/php-deploy.log', 7, static::$logLevel));
         }

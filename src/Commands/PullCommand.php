@@ -16,11 +16,11 @@ use Symfony\Component\Process\Process;
 class PullCommand extends AbstractCommand
 {
     /**
-     * The name of the application.
+     * The full name of the repository (username-or-team/repository).
      *
      * @var string
      */
-    private $application = null;
+    private $repository = null;
 
     /**
      * The name of the branch.
@@ -44,7 +44,7 @@ class PullCommand extends AbstractCommand
         $this
             ->setName('pull')
             ->setDescription('Resets the head of a Git repository and pulls the code')
-            ->addArgument('application', InputArgument::REQUIRED, 'The name of the application')
+            ->addArgument('repository', InputArgument::REQUIRED, 'The full name (username-or-team/repository) of the repository')
             ->addArgument('branch', InputArgument::REQUIRED, 'The name of the branch to pull');
     }
 
@@ -56,27 +56,26 @@ class PullCommand extends AbstractCommand
      */
     protected function executeCommand()
     {
-        $this->application      = $this->input->getArgument('application');
-        $this->branch           = $this->input->getArgument('branch');
-
-        $configuration = \PhpDeploy\config($this->application);
-        $branches      = array_get($configuration, 'branches', []);
-
-        if (empty($branches)) {
-            throw new \Exception('No branches set');
-        }
-
-        $this->workingDirectory = array_get($branches, $this->branch);
+        $this->repository = $this->input->getArgument('repository');
+        $this->branch     = $this->input->getArgument('branch');
 
         try {
+            $configuration = \PhpDeploy\config($this->repository);
+            $branches      = array_get($configuration, 'branches', []);
+
+            if (empty($branches)) {
+                throw new \Exception('No branches set');
+            }
+
+            $this->workingDirectory = array_get($branches, $this->branch);
             $this->resetHead();
             $this->pullCode();
 
-            $this->writeln('Deployed!');
+            $this->writeln('Code pulled!');
 
             return 0;
         } catch (\Exception $e) {
-            Log::error('Deploying failed: ' . $e->getMessage() . '. Check the log file.');
+            Log::error('Pulling code failed: ' . $e->getMessage() . '. Check the log file.');
 
             throw $e;
         }
@@ -116,7 +115,7 @@ class PullCommand extends AbstractCommand
         if ($process->isSuccessful() === false) {
             Log::error($process->getOutput());
 
-            throw new \Exception('Pulling code failed');
+            throw new \Exception('Command \'git pull\' failed');
         }
     }
 }

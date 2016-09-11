@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 
 /**
@@ -6,10 +5,9 @@
  */
 
 /**
- * Defines the paths to this package and to the project.
+ * Include the composer autoloader.
  */
-define('PHP_DEPLOY_DIR', __DIR__);
-define('PHP_DEPLOY_PROJECT_DIR', PHP_DEPLOY_DIR . '/../../..');
+require_once __DIR__ . '/../../autoload.php';
 
 /**
  * Class uses.
