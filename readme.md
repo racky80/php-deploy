@@ -1,4 +1,4 @@
-# PHP Deploy package
+# PHP Deployment
 
 ## This package is still being developed!
 
@@ -52,11 +52,11 @@ This will copy a few files to your project directory.
 If you open this file, you will see that it is simply returning an array. The array is the complete configuration this
 package will need. In the copied file you will find doc blocks telling you how to configure.
 
-**`webhook-bitbucket-vk28c02j3c0.php`**
+**`webhook-bitbucket.php`**
 
 This file is able to receive webhooks from Bitbucket. If you do not use Bitbucket, you can simply delete this file.
 
-**`webhook-github-f83jf74hd02.php`**
+**`webhook-github.php`**
 
 This file is able to receive webhooks from Github. If you do not use Github, you can simply delete this file.
 
@@ -69,3 +69,8 @@ If you want to pull code manually, you can use this command.
 ```
 php vendor/bin/php-deploy pull username/repository branch
 ```
+
+## To do
+
+* [ ] Create deploy command
+* [ ] Add Gitlab support
