@@ -72,5 +72,5 @@ php vendor/bin/php-deploy pull username/repository branch
 
 ## To do
 
-[ ] Create deploy command
-[ ] Add Gitlab support
+* [ ] Create deploy command
+* [ ] Add Gitlab support
