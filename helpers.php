@@ -33,10 +33,10 @@ function path(string $file = '')
  */
 function config(string $key)
 {
-    $path = __DIR__ . '/../../../php-deploy.php';
+    $path = __DIR__ . '/../../../php-deploy-config.php';
 
     if (file_exists($path) === false) {
-        throw new \Exception('No php-deploy.php file found in your project. Run `php vendor/bin/php-deploy init` to start.');
+        throw new \Exception('No php-deploy-config.php file found in your project. Run `php vendor/bin/php-deploy init` to start.');
     }
 
     $configuration = require_once $path;

@@ -59,16 +59,15 @@ class PullCommand extends AbstractCommand
         $this->repository = $this->input->getArgument('repository');
         $this->branch     = $this->input->getArgument('branch');
 
-        $configuration = \PhpDeploy\config($this->repository);
-        $branches      = array_get($configuration, 'branches', []);
-
-        if (empty($branches)) {
-            throw new \Exception('No branches set');
-        }
-
-        $this->workingDirectory = array_get($branches, $this->branch);
-
         try {
+            $configuration = \PhpDeploy\config($this->repository);
+            $branches      = array_get($configuration, 'branches', []);
+
+            if (empty($branches)) {
+                throw new \Exception('No branches set');
+            }
+
+            $this->workingDirectory = array_get($branches, $this->branch);
             $this->resetHead();
             $this->pullCode();
 
