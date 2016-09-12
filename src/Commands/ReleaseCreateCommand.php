@@ -89,10 +89,10 @@ class ReleaseCreateCommand extends AbstractCommand
         $this->ignore     = array_merge(['/.git'], array_get($configuration, 'ignore'));
         $this->symlinks   = array_get($configuration, 'symlinks');
 
-//        $this->createDirectory();
-//        $this->copyFiles();
-//        $this->createSymlinks();
-//        $this->changeCurrent();
+        $this->createDirectory();
+        $this->copyFiles();
+        $this->createSymlinks();
+        $this->changeCurrent();
         $this->deleteOldReleases();
 
         return 0;
