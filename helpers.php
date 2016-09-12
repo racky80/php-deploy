@@ -12,7 +12,7 @@ namespace PhpDeploy;
  * @param  string $file
  * @return string
  */
-function path(string $file = '')
+function path($file = '')
 {
     if (substr($file, 0, 1) !== '/') {
         $file = '/' . $file;
@@ -31,7 +31,7 @@ function path(string $file = '')
  * @return mixed
  * @throws \Exception
  */
-function config(string $key)
+function config($key)
 {
     $path = __DIR__ . '/../../../php-deploy-config.php';
 

@@ -129,7 +129,7 @@ class ReleaseCreateCommand extends AbstractCommand
             ->map(function (\SplFileInfo $splFileInfo) {
                 return str_replace($this->from, '', $splFileInfo->getPathname());
             })
-            ->filter(function (string $path) {
+            ->filter(function ($path) {
                 foreach ($this->ignore as $pattern) {
                     // path and pattern starting with a slash
                     if (substr($pattern, 0, 1) === '/' && strpos($path, $pattern) === 0) {
@@ -159,7 +159,7 @@ class ReleaseCreateCommand extends AbstractCommand
      *
      * @param string $path
      */
-    private function copyFile(string $path)
+    private function copyFile($path)
     {
         $this->writeln(sprintf('Copying file \'%s\'', $path));
 

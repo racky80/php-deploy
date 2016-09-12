@@ -54,7 +54,7 @@ class InitCommand extends AbstractCommand
      * @return bool
      * @throws \Exception
      */
-    private function copyFile(string $file)
+    private function copyFile($file)
     {
         $from = \PhpDeploy\path('/files/' . $file);
         $to   = \PhpDeploy\path('/../../..') . '/' . $file;
