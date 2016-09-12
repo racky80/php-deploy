@@ -52,7 +52,7 @@ abstract class AbstractCommand extends Command
      *
      * @param string $message
      */
-    protected function writeln(string $message)
+    protected function writeln($message)
     {
         $this->output->writeln($message);
     }
