@@ -118,4 +118,26 @@ class PullCommand extends AbstractCommand
             throw new \Exception('Command \'git pull\' failed');
         }
     }
+
+    /**
+     * Calls the custom git hook 'post-pull'. This file must be executable! Because there is no git hook after the `git
+     * pull` command, you can use this to run code after a `git pull`.
+     *
+     * @throws \Exception
+     */
+    protected function afterExecution()
+    {
+        $gitHook = $this->workingDirectory . '/.git/hooks/post-pull';
+
+        if (file_exists($gitHook) === false) {
+            return;
+        }
+
+        if (is_executable($gitHook) === false) {
+            throw new \Exception('Git hook is not executable');
+        }
+
+        $process = new Process($gitHook);
+        $process->run();
+    }
 }

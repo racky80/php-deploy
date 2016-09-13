@@ -70,7 +70,11 @@ If you want to pull code manually, you can use this command.
 php vendor/bin/php-deploy pull username/repository branch
 ```
 
+You can run code after this command be using the custom git hook `post-pull`. Simply create a file in the `.git/hooks`
+directory. Don't forget to make the file executable and add the interpreter. For example: `#!/bin/bash`.
+
 ## To do
 
-* [ ] Create deploy command
+* [x] Create `release:create` command
+* [ ] write documentation for the `release:create` command 
 * [ ] Add Gitlab support

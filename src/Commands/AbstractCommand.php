@@ -44,7 +44,18 @@ abstract class AbstractCommand extends Command
         $this->input  = $input;
         $this->output = $output;
 
-        return $this->executeCommand();
+        $exitCode = $this->executeCommand();
+
+        $this->afterExecution();
+
+        return $exitCode;
+    }
+
+    /**
+     * Execute anything after the command.
+     */
+    protected function afterExecution()
+    {
     }
 
     /**
