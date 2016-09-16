@@ -137,7 +137,19 @@ class PullCommand extends AbstractCommand
             throw new \Exception('Git hook is not executable');
         }
 
-        $process = new Process($gitHook);
-        $process->run();
+        $this->writeln('Calling custom git hook');
+
+        $process = new Process('cd ' . $this->workingDirectory . ' && ' . $gitHook);
+        $process->start();
+
+        foreach ($process as $type => $data) {
+            $this->writeln('<comment>' . $data . '</comment>');
+        }
+
+        if ($process->isSuccessful()) {
+            $this->writeln('Git hook succesfully executed');
+        } else {
+            $this->writeln('Git hook execution failed');
+        }
     }
 }
