@@ -15,6 +15,7 @@ require_once __DIR__ . '/../../autoload.php';
 use PhpDeploy\Commands\InitCommand;
 use PhpDeploy\Commands\PullCommand;
 use PhpDeploy\Commands\ReleaseCreateCommand;
+use PhpDeploy\Commands\ReleaseRollbackCommand;
 use Symfony\Component\Console\Application;
 
 /**
@@ -26,4 +27,5 @@ $application = new Application();
 $application->add(new InitCommand());
 $application->add(new PullCommand());
 $application->add(new ReleaseCreateCommand());
+$application->add(new ReleaseRollbackCommand());
 $application->run();

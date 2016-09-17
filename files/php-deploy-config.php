@@ -29,7 +29,7 @@ return [
         'deployment' => [
 
             /**
-             * The source directory to copy the file from.
+             * The source directory to copy the files from.
              */
             'from'     => '/var/www/domains/accept.example.org',
 
