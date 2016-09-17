@@ -6,6 +6,7 @@ A set of commands to:
 
 * Pull the code from Bitbucket or Github.
 * Deploy a website to a production environment.
+* Perform a rollback of your production environment.
 
 This package does not:
 
@@ -18,7 +19,7 @@ This package was created to provide a set of simple but helpful commands to depl
 
 ## Requirements
 
-* PHP 7.*
+* PHP 5.6.*
 * Git installed on your server
 
 ## Before installation
@@ -62,6 +63,9 @@ This file is able to receive webhooks from Github. If you do not use Github, you
 
 ## Commands
 
+To see all the possible commands, simply run `php vendor/bin/php-deploy` in the same directory where you have your
+composer.json file.
+
 ### `pull`
 
 If you want to pull code manually, you can use this command. 
@@ -73,8 +77,27 @@ php vendor/bin/php-deploy pull username/repository branch
 You can run code after this command be using the custom git hook `post-pull`. Simply create a file in the `.git/hooks`
 directory. Don't forget to make the file executable and add the interpreter. For example: `#!/bin/bash`.
 
+### `release:create`
+
+```
+release:create [--dry-run] [--] <repository>
+```
+
+This command creates a new release based on the directory in the configuration file (repository > deployment > from). A
+new directory with a timestamp is created and the files are copied to this directory. Use the `--dry-run` option to run
+the command without any files changed, but only to see the output of the command.
+
+### `release:rollback`
+
+```
+release:rollback [--dry-run] [--] <repository>
+```
+
+You can also perform a rollback on your production environment. Use the `--dry-run` option to only see the output with
+anything changed. Be aware that a release with be deleted and cannot be undone.
+
 ## To do
 
-* [x] Create `release:create` command
-* [ ] write documentation for the `release:create` command 
 * [ ] Add Gitlab support
+* [ ] Add option `--delete` to the `release:rollback` command: make it optional to delete a release directory. Otherwise
+it should simply change the symlink.
