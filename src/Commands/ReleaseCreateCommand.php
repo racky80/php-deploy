@@ -26,6 +26,11 @@ class ReleaseCreateCommand extends AbstractCommand
     private $isDryRun = false;
 
     /**
+     * @var int
+     */
+    private $releasesToKeep = 5;
+
+    /**
      * @var Filesystem
      */
     private $fileSystem;
@@ -93,6 +98,7 @@ class ReleaseCreateCommand extends AbstractCommand
         $this->copyFiles();
         $this->createSymlinks();
         $this->changeCurrent();
+        $this->renameOldReleases();
         $this->deleteOldReleases();
 
         return 0;
@@ -214,18 +220,33 @@ class ReleaseCreateCommand extends AbstractCommand
     }
 
     /**
+     * Renames the old releases by adding an underscore to the name.
+     */
+    private function renameOldReleases()
+    {
+        collect(glob($this->to . '/releases/*', GLOB_ONLYDIR))
+            ->reject(function ($directory) {
+                dd($directory);
+                return $directory === $this->releaseDirectory || substr(pathinfo($directory, PATHINFO_BASENAME), 0, 1) === '_';
+            })
+            ->each(function ($directory) {
+                rename($directory, pathinfo($directory, PATHINFO_DIRNAME) . '/_' . pathinfo($directory, PATHINFO_BASENAME));
+            });
+    }
+
+    /**
      * Deletes the old releases.
      */
     private function deleteOldReleases()
     {
-        $releases = glob($this->to . '/releases/*', GLOB_ONLYDIR);
+        $releases = glob($this->to . '/releases/_*', GLOB_ONLYDIR);
         $count    = count($releases);
 
-        if ($count <= 5) {
+        if ($count <= $this->releasesToKeep) {
             $this->writeln('<comment>No releases found to delete</comment>');
         }
 
-        while (count($releases) > 5) {
+        while (count($releases) > $this->releasesToKeep) {
             $release = array_shift($releases);
 
             $this->writeln(sprintf('Deleting release \'%s\'', preg_replace('/.*\/([0-9]+)/', '$1', $release)));

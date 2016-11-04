@@ -86,11 +86,13 @@ class ReleaseRollbackCommand extends AbstractCommand
     private function changeSymlink()
     {
         $release = $this->getReleases()->last();
+        $renamed = str_replace('_', '', $release);
 
-        $this->writeln('Changing symlink to ' .$release);
+        $this->writeln('Changing symlink to ' . $renamed);
 
         if ($this->isDryRun === false) {
-            $this->fileSystem->symlink($release, $this->releasesDirectory . '/current');
+            $this->fileSystem->rename($release, $renamed);
+            $this->fileSystem->symlink($renamed, $this->releasesDirectory . '/current');
         }
     }
 
@@ -116,12 +118,18 @@ class ReleaseRollbackCommand extends AbstractCommand
      */
     private function getReleases()
     {
-        $releases = collect(glob($this->releasesDirectory . '/releases/*', GLOB_ONLYDIR));
+        $glob     = glob($this->releasesDirectory . '/releases/*', GLOB_ONLYDIR);
+        $releases = collect($glob)
+            ->sortBy(function ($release) {
+                return preg_replace('/.*\/_?([0-9]+)$/', '$1', $release);
+            })
+            ->reverse()
+            ->slice(0, 2);
 
         if ($releases->count() === 1) {
             throw new \Exception('Only one release left. Unable to perform rollback.');
         }
 
-        return $releases->reverse()->slice(0, 2);
+        return $releases;
     }
 }
