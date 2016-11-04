@@ -226,7 +226,6 @@ class ReleaseCreateCommand extends AbstractCommand
     {
         collect(glob($this->to . '/releases/*', GLOB_ONLYDIR))
             ->reject(function ($directory) {
-                dd($directory);
                 return $directory === $this->releaseDirectory || substr(pathinfo($directory, PATHINFO_BASENAME), 0, 1) === '_';
             })
             ->each(function ($directory) {
