@@ -56,6 +56,11 @@ class ReleaseCreateCommand extends AbstractCommand
     private $symlinks = [];
 
     /**
+     * @var array
+     */
+    private $scripts = [];
+
+    /**
      * @var string
      */
     private $releaseDirectory;
@@ -93,15 +98,32 @@ class ReleaseCreateCommand extends AbstractCommand
         $this->to         = array_get($configuration, 'to');
         $this->ignore     = array_merge(['/.git'], array_get($configuration, 'ignore'));
         $this->symlinks   = array_get($configuration, 'symlinks');
+        $this->scripts    = array_get($configuration, 'scripts', []);
 
+        $this->runScript('pre');
         $this->createDirectory();
         $this->copyFiles();
         $this->createSymlinks();
         $this->changeCurrent();
         $this->renameOldReleases();
         $this->deleteOldReleases();
+        $this->runScript('post');
 
-        return 0;
+        exit(0);
+    }
+
+    /**
+     * Executes commands.
+     *
+     * @param string $type
+     */
+    private function runScript($type)
+    {
+        $commands = (array) array_get($this->scripts, $type, []);
+
+        foreach ($commands as $command) {
+            shell_exec($command);
+        }
     }
 
     /**

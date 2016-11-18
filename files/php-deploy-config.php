@@ -74,6 +74,18 @@ return [
                 '/shared/uploads' => '/current/public/uploads',
                 '/shared/.env'    => '/current/.env',
             ],
+
+            /**
+             * Scripts. Run shell scripts before and after the creation of a release. You can use a string or an array
+             * with multiple commands.
+             */
+            'scripts' => [
+                'pre' => 'php some-php-script.php',
+                'post' => [
+                    'first --command',
+                    'second --command'
+                ]
+            ]
         ],
     ],
 ];
