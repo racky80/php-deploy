@@ -122,7 +122,12 @@ class ReleaseCreateCommand extends AbstractCommand
         $commands = (array) array_get($this->scripts, $type, []);
 
         foreach ($commands as $command) {
-            shell_exec($command);
+
+            $this->writeln('Execute command: `' . $command . '`');
+
+            if ($this->isDryRun === false) {
+                shell_exec($command);
+            }
         }
     }
 
