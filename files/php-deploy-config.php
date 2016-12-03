@@ -8,7 +8,7 @@ return [
     /**
      * The full name of a repository (username-or-team/repository).
      */
-    'rolfdenhartog/symphony-theme' => [
+    'rolfdenhartog/wordpress-theme' => [
 
         /**
          * 'branches' is an array with branch names and paths for the pull command. If you follow Git flow, you will

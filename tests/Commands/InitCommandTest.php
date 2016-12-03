@@ -73,16 +73,8 @@ class InitCommandTest extends TestCase
      */
     public function testUnwriteableDirectory()
     {
-        $tmpDirectory = sys_get_temp_dir();
-        $prefix       = 'unwriteable';
+        $unwriteable = $this->createTemporaryDirectory('unwriteable');
 
-        // remove old directories
-        shell_exec('rm -rf ' . $tmpDirectory . '/' . $prefix . '*');
-        // create path
-        $unwriteable = tempnam($tmpDirectory, $prefix . '-');
-
-        unlink($unwriteable);
-        mkdir($unwriteable);
         chdir($unwriteable);
         chmod($unwriteable, 0444);
 
