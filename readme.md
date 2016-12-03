@@ -1,5 +1,7 @@
 # PHP Deployment
 
+[![Build Status](https://travis-ci.org/rolfdenhartog/php-deploy.svg)](https://travis-ci.org/rolfdenhartog/php-deploy)
+
 ## This package is still being developed!
 
 A set of commands to:
