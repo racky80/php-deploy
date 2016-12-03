@@ -6,6 +6,8 @@
 
 namespace PhpDeploy\Commands;
 
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * InitCommand class.
  */
@@ -33,22 +35,24 @@ class InitCommand extends AbstractCommand
     }
 
     /**
-     * Loop files property and call the copyFile method.
+     * Checks the directory if it's writeable and loops the files and calls the copyFile method.
      *
-     * @return int
-     * @throws \Exception
+     * @throws IOException
      */
     protected function executeCommand()
     {
-        foreach ($this->files as $file) {
-            $this->copyFile($file);
+        if (is_writeable(getcwd()) === false) {
+            throw new IOException(sprintf('Directory not writable \'%s\'', getcwd()));
         }
+
+        collect($this->files)->each(function ($file) {
+            $this->copyFile($file);
+        });
     }
 
     /**
-     * - Checks if the file is already copied. Returns 0 if the file already exists.
-     * - Copies the file and returns 0 on success.
-     * - Throws an exception if copying failed.
+     * Checks if the file is already exists and writes a message to the output or copies the file and outputs the
+     * message.
      *
      * @param string $file
      * @return bool
@@ -57,22 +61,14 @@ class InitCommand extends AbstractCommand
     private function copyFile($file)
     {
         $from = \PhpDeploy\path('/files/' . $file);
-        $to   = \PhpDeploy\path('/../../..') . '/' . $file;
+        $to   = getcwd() . '/' . $file;
 
         if (file_exists($to)) {
             $this->writeln(sprintf('File \'%s\' already copied', $file));
+        } else {
+            copy($from, $to);
 
-            return true;
-        }
-
-        $this->writeln(sprintf('Copying file \'%s\'', $file));
-
-        if (copy($from, $to)) {
             $this->writeln(sprintf('File \'%s\' copied', $file));
-
-            return true;
         }
-
-        throw new \Exception(sprintf('Copying file \'%s\' failed', $file));
     }
 }
