@@ -47,4 +47,25 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->application = new Application();
     }
+
+    /**
+     * Creates a temporary directory.
+     *
+     * @param string $prefix
+     * @return string
+     */
+    protected function createTemporaryDirectory(string $prefix = 'test')
+    {
+        $tmpDirectory = sys_get_temp_dir();
+
+        // remove old directories
+        shell_exec('rm -rf ' . $tmpDirectory . '/' . $prefix . '*');
+        // create path
+        $directory = tempnam($tmpDirectory, $prefix . '-');
+
+        unlink($directory);
+        mkdir($directory, 0755, true);
+
+        return $directory;
+    }
 }
