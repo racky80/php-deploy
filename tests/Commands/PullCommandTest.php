@@ -32,7 +32,7 @@ class PullCommandTest extends TestCase
     private $directory;
 
     /**
-     * - Adds the init command.
+     * - Adds the command.
      * - Searches for the command by its name.
      * - Creates a new CommandTester instance with the command as argument.
      */
