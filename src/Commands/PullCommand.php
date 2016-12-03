@@ -94,14 +94,14 @@ class PullCommand extends AbstractCommand
         $process->run();
 
         if ($process->isSuccessful() === false) {
-            Log::error($process->getOutput());
+            Log::error($process->getErrorOutput());
 
             throw new \Exception('Resetting head failed');
         }
     }
 
     /**
-     * Pulls the code from Bitbucket.
+     * Pulls the code from the repository.
      *
      * @throws \Exception
      */
@@ -113,7 +113,7 @@ class PullCommand extends AbstractCommand
         $process->run();
 
         if ($process->isSuccessful() === false) {
-            Log::error($process->getOutput());
+            Log::error($process->getErrorOutput());
 
             throw new \Exception('Command \'git pull\' failed');
         }

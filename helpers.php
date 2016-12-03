@@ -33,13 +33,13 @@ function path($file = '')
  */
 function config($key)
 {
-    $path = __DIR__ . '/../../../php-deploy-config.php';
+    $path = getcwd() . '/php-deploy-config.php';
 
     if (file_exists($path) === false) {
         throw new \Exception('No php-deploy-config.php file found in your project. Run `php vendor/bin/php-deploy init` to start.');
     }
 
-    $configuration = require_once $path;
+    $configuration = require $path;
 
     if (array_has($configuration, $key) === false) {
         throw new \Exception(sprintf('No configuration found with the key %s', $key));
