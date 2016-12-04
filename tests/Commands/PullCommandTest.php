@@ -92,7 +92,7 @@ class PullCommandTest extends TestCase
         // create file
         file_put_contents($file, 'echo "post pull hook"');
         // change mode
-        chmod($file, 0766);
+        chmod($file, 0755);
 
         $this->commandTester->execute([
             'command'    => $this->command->getName(),
@@ -103,5 +103,46 @@ class PullCommandTest extends TestCase
         $output = $this->commandTester->getDisplay();
 
         $this->assertContains('post pull hook', $output);
+    }
+
+    /**
+     * Tests the post pull hook with wrong permissions.
+     */
+    public function testNonExecutablePostPullHook()
+    {
+        // create filename
+        $file = $this->directory . '/.git/hooks/post-pull';
+        // create file
+        file_put_contents($file, 'echo "post pull hook"');
+        // change mode
+        chmod($file, 0644);
+
+        $this->expectException(\Exception::class);
+
+        $this->commandTester->execute([
+            'command'    => $this->command->getName(),
+            'repository' => 'rolfdenhartog/wordpress-theme',
+            'branch'     => 'master',
+        ]);
+    }
+
+    /**
+     * Tests the command without branches set.
+     */
+    public function testNoBranches()
+    {
+        $file                 = \PhpDeploy\path('/logs/tests/php-deploy-config.php');
+        $fileContents         = file_get_contents($file);
+        $fileContentsReplaced = preg_replace('/(\'branches\' +=> \[).*(\],)/msU', '$1$2', $fileContents);
+
+        file_put_contents($file, $fileContentsReplaced);
+
+        $this->expectException(\Exception::class);
+
+        $this->commandTester->execute([
+            'command'    => $this->command->getName(),
+            'repository' => 'rolfdenhartog/wordpress-theme',
+            'branch'     => 'master',
+        ]);
     }
 }
